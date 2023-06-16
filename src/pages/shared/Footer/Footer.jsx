@@ -1,8 +1,8 @@
 import logo from "../../../assets/images/travel-stay-logo.png";
 const Footer = () => {
   return (
-    <div className="p-10">
-      <footer className="footer  bg-white text-base-content ">
+    <div className=" border-t-2">
+      <footer className="footer p-10 bg-white text-base-content ">
         <div className="flex flex-col h-20 gap-2">
           <img className="h-full" src={logo} alt="Travel Stay Logo" />
           <h2 className=" text-2xl lg:text-3xl font-bold">
@@ -31,9 +31,9 @@ const Footer = () => {
         </div>
       </footer>
       <div className="divider py-5"></div>
-      <div className="footer footer-center text-base-content">
+      <div className="footer pb-10 footer-center text-base-content">
         <div>
-          <p>Copyright © 2023 - All right reserved by Travel Stay.</p>
+          <p className="font-semibold">Copyright © 2023 - All right reserved by Travel Stay.</p>
         </div>
       </div>
     </div>

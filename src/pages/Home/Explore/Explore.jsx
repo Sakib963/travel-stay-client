@@ -162,7 +162,7 @@ const Explore = () => {
           </div>
 
           <div>
-            <button className="flex gap-2 justify-center items-center bg-[#CDC7F8] px-3 py-3 font-semibold rounded-md transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 hover:bg-[#A69BFB] duration-300 w-full lg:w-min">
+            <button className="flex gap-2 justify-center items-center bg-[#003276] px-3 py-3 font-semibold rounded-md transition ease-in-out delay-150 text-white hover:scale-95 hover:bg-[#042656] duration-300 w-full lg:w-min">
               <MdOutlineFileDownloadDone className="text-2xl" />
               Submit
             </button>

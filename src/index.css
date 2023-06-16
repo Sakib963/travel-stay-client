@@ -23,6 +23,7 @@
   display: inline-block;
   position: relative;
 }
+
 .calendarElement {
   position: absolute;
   left: 50%;
@@ -30,4 +31,14 @@
   top: 40px;
   border: 1px solid #ccc;
   z-index: 999;
+}
+
+.gallery-body {
+  right: -100%;
+  backdrop-filter: blur(10px);
+  transition: 1s;
+}
+
+.gallery-card:hover .gallery-body {
+  right: 0;
 }

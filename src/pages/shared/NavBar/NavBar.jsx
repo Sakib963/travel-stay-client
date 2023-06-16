@@ -19,18 +19,6 @@ const NavBar = () => {
       </li>
       <li>
         <NavLink
-          to={"/special-offer"}
-          className={({ isActive }) =>
-            isActive
-              ? "active-link hover:bg-[#003276] hover:text-white"
-              : "hover:bg-[#003276] hover:text-white"
-          }
-        >
-          Special Offer
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
           to={"/contact"}
           className={({ isActive }) =>
             isActive
