@@ -10,8 +10,8 @@
 .banner {
   background-image: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.289),
-      rgba(0, 0, 0, 0.679)
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.548)
     ),
     url("/src/assets/images/banner.png");
   background-position: center;
