@@ -1,6 +1,6 @@
 const CityCard = () => {
   return (
-    <div className="card shadow-xl border">
+    <div className="card shadow-xl border transition ease-in-out delay-150 hover:scale-105 duration-300">
       <figure>
         <img
           src="https://i.ibb.co/dDpcyTT/class-2.png"
