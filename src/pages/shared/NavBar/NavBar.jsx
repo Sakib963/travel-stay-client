@@ -8,13 +8,15 @@ import avatarIcon from "../../../assets/images/avatar-icon.png";
 import Swal from "sweetalert2";
 import { Tooltip } from "react-tooltip";
 import useAdmin from "../../../hooks/useAdmin";
+import useOwner from "../../../hooks/useOwner";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
   console.log(user);
 
   const [isAdmin] = useAdmin();
-  console.log(isAdmin)
+  const [isOwner] = useOwner();
+  console.log(isAdmin);
 
   const handleLogout = () => {
     logOut()
@@ -55,20 +57,47 @@ const NavBar = () => {
           Contact
         </NavLink>
       </li>
-      {user && (
-        <li>
-          <NavLink
-            to={"/reservations"}
-            className={({ isActive }) =>
-              isActive
-                ? "active-link hover:bg-[#003276] hover:text-white"
-                : "hover:bg-[#003276] hover:text-white"
-            }
-          >
-            Reservations
-          </NavLink>
-        </li>
-      )}
+      {user &&
+        (isAdmin ? (
+          <li>
+            <NavLink
+              to={"/dashboard/manage-users"}
+              className={({ isActive }) =>
+                isActive
+                  ? "active-link hover:bg-[#003276] hover:text-white"
+                  : "hover:bg-[#003276] hover:text-white"
+              }
+            >
+              Dashboard
+            </NavLink>
+          </li>
+        ) : isOwner ? (
+          <li>
+            <NavLink
+              to={"/dashboard/manage-bookings-owner"}
+              className={({ isActive }) =>
+                isActive
+                  ? "active-link hover:bg-[#003276] hover:text-white"
+                  : "hover:bg-[#003276] hover:text-white"
+              }
+            >
+              Dashboard
+            </NavLink>
+          </li>
+        ) : (
+          <li>
+            <NavLink
+              to={"/reservations"}
+              className={({ isActive }) =>
+                isActive
+                  ? "active-link hover:bg-[#003276] hover:text-white"
+                  : "hover:bg-[#003276] hover:text-white"
+              }
+            >
+              Reservations
+            </NavLink>
+          </li>
+        ))}
     </>
   );
   return (

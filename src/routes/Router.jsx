@@ -7,6 +7,11 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Login/Register";
 import PrivateRoute from "./PrivateRoute";
 import Reservations from "../pages/Reservations/Reservations";
+import Dashboard from "../layout/Dashboard";
+import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
+import AdminRoute from "./AdminRoute";
+import OwnerRoute from "./OwnerRoute";
+import ManageBookings from "../pages/Dashboard/ManageBookings/ManageBookings";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +41,33 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <Reservations></Reservations>
           </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "manage-users",
+        element: (
+          <AdminRoute>
+            <ManageUsers></ManageUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-bookings-owner",
+        element: (
+          <OwnerRoute>
+            <ManageBookings></ManageBookings>
+          </OwnerRoute>
         ),
       },
     ],
