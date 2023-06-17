@@ -1,21 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
-import { FcGoogle } from "react-icons/fc";
 import { MdOutlineFileDownloadDone } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import registerBg from "../../assets/images/registration.svg";
+import { AuthContext } from "../../provider/AuthProvider";
+import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin";
 
 const Register = () => {
-  //   const { loginUser } = useContext(AuthContext);
+  const [open, setOpen] = useState(0);
+  const [inputType, setInputType] = useState("password");
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-  const [open, setOpen] = useState(0);
-  const [wrongPasswordError, setWrongPasswordError] = useState(false);
-  const [notFoundError, setNotFoundError] = useState(false);
-  const [inputType, setInputType] = useState("password");
+  const from = location?.state?.from?.pathname || "/";
+
+  const { createUser, updateUserProfile } = useContext(AuthContext);
 
   /* Handling See Password */
   const handleToggle = () => {
@@ -38,28 +39,54 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-    /* loginUser(data.email, data.password)
+    createUser(data.email, data.password)
       .then(() => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Logged In Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate(from, { replace: true });
-        reset();
+        updateUserProfile(data.name, data.photo)
+          .then(() => {
+            const savedUser = {
+              name: data.name,
+              email: data.email,
+              photo: data.photo,
+              role: "user",
+            };
+            fetch("http://localhost:5000/users", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(savedUser),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.insertedId) {
+                  reset();
+                }
+              });
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Signed Up Successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+
+            navigate(from, { replace: true });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
-        console.log(error.message);
-        if (error.message === "Firebase: Error (auth/wrong-password).") {
-          setWrongPasswordError(true);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("Error:", errorCode, "Error Message:", errorMessage);
+        if (errorCode === "auth/email-already-in-use") {
+          Swal.fire({
+            title: "Error!",
+            text: "This Email Already In Use.",
+            icon: "error",
+            confirmButtonText: "Got It",
+          });
         }
-        if (error.message === "Firebase: Error (auth/user-not-found).") {
-          setNotFoundError(true);
-        }
-      }); */
+      });
   };
   return (
     <div className="py-28 grid lg:grid-cols-2 gap-8">
@@ -153,18 +180,6 @@ const Register = () => {
                 character.
               </p>
             )}
-            {wrongPasswordError && (
-              <p className="text-red-600 flex items-baseline gap-1">
-                <BiErrorCircle />
-                Wrong Password.
-              </p>
-            )}
-            {notFoundError && (
-              <p className="text-red-600 flex items-baseline gap-1">
-                <BiErrorCircle />
-                User Not Found.
-              </p>
-            )}
           </div>
 
           {/* Photo URL Field */}
@@ -194,12 +209,14 @@ const Register = () => {
             </Link>
           </div>
           <div className="divider"></div>
-          <div className="text-center">
-            <FcGoogle className="mx-auto p-3 text-5xl bg-white border rounded-md hover:bg-[#003276] transition ease-in-out delay-150 duration-300 cursor-pointer" />
-          </div>
+          <SocialLogin></SocialLogin>
         </form>
       </div>
-      <img src={registerBg} alt="Contact Us" className="lg:mx-auto px-10 lg:px-0" />
+      <img
+        src={registerBg}
+        alt="Contact Us"
+        className="lg:mx-auto px-10 lg:px-0"
+      />
     </div>
   );
 };

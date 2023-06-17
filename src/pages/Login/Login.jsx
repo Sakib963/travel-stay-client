@@ -1,15 +1,16 @@
 import { MdOutlineFileDownloadDone } from "react-icons/md";
 import loginBg from "../../assets/images/login.svg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BiErrorCircle } from "react-icons/bi";
-import { FcGoogle } from "react-icons/fc";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Swal from "sweetalert2";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
+import SocialLogin from "../../components/SocialLogin";
 
 const Login = () => {
-  //   const { loginUser } = useContext(AuthContext);
+    const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -40,7 +41,7 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    /* loginUser(data.email, data.password)
+    loginUser(data.email, data.password)
       .then(() => {
         Swal.fire({
           position: "top-end",
@@ -60,7 +61,7 @@ const Login = () => {
         if (error.message === "Firebase: Error (auth/user-not-found).") {
           setNotFoundError(true);
         }
-      }); */
+      });
   };
   return (
     <div className="py-28 grid lg:grid-cols-2 gap-8">
@@ -168,12 +169,14 @@ const Login = () => {
             </Link>
           </div>
           <div className="divider"></div>
-          <div className="text-center">
-            <FcGoogle className="mx-auto p-3 text-5xl bg-white border rounded-md hover:bg-[#003276] transition ease-in-out delay-150 duration-300 cursor-pointer" />
-          </div>
+          <SocialLogin></SocialLogin>
         </form>
       </div>
-      <img src={loginBg} alt="Contact Us" className="lg:mx-auto px-10 lg:px-0" />
+      <img
+        src={loginBg}
+        alt="Contact Us"
+        className="lg:mx-auto px-10 lg:px-0"
+      />
     </div>
   );
 };

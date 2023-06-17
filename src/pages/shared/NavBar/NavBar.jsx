@@ -1,8 +1,34 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/images/travel-stay-logo.png";
 import { MdLogin } from "react-icons/md";
+import { useContext } from "react";
+import { AuthContext } from "../../../provider/AuthProvider";
+import { BiLogOut } from "react-icons/bi";
+import avatarIcon from "../../../assets/images/avatar-icon.png";
+import Swal from "sweetalert2";
+import { Tooltip } from "react-tooltip";
+import useAdmin from "../../../hooks/useAdmin";
 
 const NavBar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  console.log(user);
+
+  const [isAdmin] = useAdmin();
+  console.log(isAdmin)
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Logged Out Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
   const navOptions = (
     <>
       <li>
@@ -29,10 +55,25 @@ const NavBar = () => {
           Contact
         </NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink
+            to={"/reservations"}
+            className={({ isActive }) =>
+              isActive
+                ? "active-link hover:bg-[#003276] hover:text-white"
+                : "hover:bg-[#003276] hover:text-white"
+            }
+          >
+            Reservations
+          </NavLink>
+        </li>
+      )}
     </>
   );
   return (
     <div className="navbar lg:px-10 fixed z-10 bg-white bg-opacity-70 border-b-[1px] border-black">
+      <Tooltip id="my-tooltip" />
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -70,12 +111,53 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">{navOptions}</ul>
       </div>
       <div className="navbar-end">
-        <Link to={'/login'}>
-          <button className="px-5 lg:px-10 py-3 bg-[#003276] rounded-md text-white font-semibold flex gap-2 items-center justify-center transition ease-in-out delay-150 hover:scale-95 hover:bg-[#042656] duration-300">
-            <MdLogin className="text-2xl" />
-            Login
-          </button>
-        </Link>
+        {user ? (
+          <div className="flex gap-2">
+            {user?.photoURL ? (
+              <div className="avatar placeholder">
+                <div className="bg-[#003276] text-neutral-content rounded-full w-12">
+                  <img
+                    src={user.photoURL}
+                    alt="user photo"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content={
+                      user.displayName ? user.displayName : "No Name Added"
+                    }
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="avatar placeholder">
+                <div className="bg-[#003276] text-neutral-content rounded-full w-12">
+                  <img
+                    src={avatarIcon}
+                    alt=""
+                    className="p-2"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content={
+                      user.displayName ? user.displayName : "No Name Added"
+                    }
+                  />
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={handleLogout}
+              className="px-5 lg:px-10 py-3 bg-[#003276] rounded-md text-white font-semibold flex gap-2 items-center justify-center transition ease-in-out delay-150 hover:scale-95 hover:bg-[#042656] duration-300"
+            >
+              <BiLogOut className="text-2xl" />
+              Logout
+            </button>
+          </div>
+        ) : (
+          <Link to={"/login"}>
+            <button className="px-5 lg:px-10 py-3 bg-[#003276] rounded-md text-white font-semibold flex gap-2 items-center justify-center transition ease-in-out delay-150 hover:scale-95 hover:bg-[#042656] duration-300">
+              <MdLogin className="text-2xl" />
+              Login
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   );

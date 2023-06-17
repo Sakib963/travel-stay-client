@@ -5,6 +5,8 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Login/Register";
+import PrivateRoute from "./PrivateRoute";
+import Reservations from "../pages/Reservations/Reservations";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register></Register>,
+      },
+      {
+        path: "reservations",
+        element: (
+          <PrivateRoute>
+            <Reservations></Reservations>
+          </PrivateRoute>
+        ),
       },
     ],
   },
