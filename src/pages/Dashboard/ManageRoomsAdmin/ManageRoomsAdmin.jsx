@@ -13,6 +13,8 @@ const ManageRoomsAdmin = () => {
     }
   );
 
+  console.log(rooms)
+
   const handleApprove = (_id) => {
     axiosSecure
       .patch(`/all-rooms/${_id}?status=approved`)
