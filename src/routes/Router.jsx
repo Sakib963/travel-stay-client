@@ -14,6 +14,8 @@ import OwnerRoute from "./OwnerRoute";
 import ManageBookings from "../pages/Dashboard/ManageBookings/ManageBookings";
 import AddRoom from "../pages/Dashboard/AddRoom/AddRoom";
 import ManageRoomsAdmin from "../pages/Dashboard/ManageRoomsAdmin/ManageRoomsAdmin";
+import ManageRoomsOwner from "../pages/Dashboard/ManageRoomsOwner/ManageRoomsOwner";
+import UpdateRoom from "../pages/Dashboard/UpdateRoom/UpdateRoom";
 
 const router = createBrowserRouter([
   {
@@ -81,6 +83,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "manage-rooms-owner",
+        element: (
+          <OwnerRoute>
+            <ManageRoomsOwner></ManageRoomsOwner>
+          </OwnerRoute>
+        ),
+      },
+      {
         path: "add-a-room",
         element: (
           <OwnerRoute>
@@ -88,6 +98,13 @@ const router = createBrowserRouter([
           </OwnerRoute>
         ),
       },
+      {
+        path: 'update-room/:id',
+        element: <OwnerRoute>
+          <UpdateRoom></UpdateRoom>
+        </OwnerRoute>,
+        // loader: ({params}) => fetch(`http://localhost:5000/room/${params.id}`)
+      }
     ],
   },
 ]);

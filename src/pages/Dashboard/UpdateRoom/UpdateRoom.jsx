@@ -1,15 +1,29 @@
-import { useContext } from "react";
-import { AuthContext } from "../../../provider/AuthProvider";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import { BiErrorCircle, BiLogIn } from "react-icons/bi";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { AuthContext } from "../../../provider/AuthProvider";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
-const AddRoom = () => {
+const UpdateRoom = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [loadedRoomData, setLoadedRoomData] = useState({});
+
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  // Extract the ID from the pathname
+  const id = pathname.substring(pathname.lastIndexOf("/") + 1);
+  console.log(id);
+
   const [axiosSecure] = useAxiosSecure();
+  useEffect(() => {
+    axiosSecure.get(`/room/${id}`).then((res) => {
+      setLoadedRoomData(res.data);
+    });
+  }, []);
 
   const {
     register,
@@ -28,19 +42,19 @@ const AddRoom = () => {
     };
     console.log(roomData);
     axiosSecure
-      .post("/create-room", roomData)
+      .patch(`/room/${id}`, roomData)
       .then((res) => {
-        if (res.data.insertedId) {
+        if (res.data.modifiedCount) {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Room Added Successfully.",
+            title: "Room Has Been Updated.",
             showConfirmButton: false,
             timer: 1500,
           });
-          reset();
-          navigate('/dashboard/manage-rooms-owner')
         }
+        reset();
+        navigate('/dashboard/manage-rooms-owner')
       })
       .catch(() => {
         Swal.fire({
@@ -50,10 +64,11 @@ const AddRoom = () => {
         });
       });
   };
+
   return (
     <div className="py-20 lg:py-10">
       <h3 className="text-2xl lg:text-3xl font-semibold text-center">
-        Add A Room
+        Manage Rooms
       </h3>
       <div className="mt-10">
         <form
@@ -67,6 +82,7 @@ const AddRoom = () => {
               <input
                 type="text"
                 name="hotelName"
+                defaultValue={loadedRoomData.hotelName}
                 {...register("hotelName", {
                   required: true,
                   pattern: /^(?!\s*$).+/,
@@ -89,6 +105,7 @@ const AddRoom = () => {
               <input
                 type="text"
                 name="hotelType"
+                defaultValue={loadedRoomData.hotelType}
                 {...register("hotelType", {
                   required: true,
                   pattern: /^(?!\s*$).+/,
@@ -111,6 +128,7 @@ const AddRoom = () => {
               <input
                 type="text"
                 name="city"
+                defaultValue={loadedRoomData.city}
                 {...register("city", {
                   required: true,
                   pattern: /^(?!\s*$).+/,
@@ -133,6 +151,7 @@ const AddRoom = () => {
               <input
                 type="text"
                 name="address"
+                defaultValue={loadedRoomData.address}
                 {...register("address", {
                   required: true,
                   pattern: /^(?!\s*$).+/,
@@ -155,6 +174,7 @@ const AddRoom = () => {
               <input
                 type="text"
                 name="photoURL"
+                defaultValue={loadedRoomData.photoURL}
                 {...register("photoURL", {
                   required: true,
                   pattern: /^(?!\s*$).+/,
@@ -177,6 +197,7 @@ const AddRoom = () => {
               <input
                 type="number"
                 name="maxPeople"
+                defaultValue={loadedRoomData.maxPeople}
                 {...register("maxPeople", {
                   required: true,
                   pattern: /[1-9]/,
@@ -198,6 +219,7 @@ const AddRoom = () => {
             <div className="input input-md outline-none input-bordered">
               <textarea
                 name="roomDescription"
+                defaultValue={loadedRoomData.roomDescription}
                 {...register("roomDescription", {
                   required: true,
                   pattern: /^(?!\s*$).+/,
@@ -223,4 +245,4 @@ const AddRoom = () => {
   );
 };
 
-export default AddRoom;
+export default UpdateRoom;
