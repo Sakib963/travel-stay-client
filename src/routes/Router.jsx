@@ -12,6 +12,8 @@ import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 import AdminRoute from "./AdminRoute";
 import OwnerRoute from "./OwnerRoute";
 import ManageBookings from "../pages/Dashboard/ManageBookings/ManageBookings";
+import AddRoom from "../pages/Dashboard/AddRoom/AddRoom";
+import ManageRoomsAdmin from "../pages/Dashboard/ManageRoomsAdmin/ManageRoomsAdmin";
 
 const router = createBrowserRouter([
   {
@@ -63,10 +65,26 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "manage-rooms",
+        element: (
+          <AdminRoute>
+            <ManageRoomsAdmin></ManageRoomsAdmin>
+          </AdminRoute>
+        ),
+      },
+      {
         path: "manage-bookings-owner",
         element: (
           <OwnerRoute>
             <ManageBookings></ManageBookings>
+          </OwnerRoute>
+        ),
+      },
+      {
+        path: "add-a-room",
+        element: (
+          <OwnerRoute>
+            <AddRoom></AddRoom>
           </OwnerRoute>
         ),
       },
