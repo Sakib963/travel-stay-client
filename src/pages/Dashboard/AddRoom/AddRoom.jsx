@@ -193,7 +193,7 @@ const AddRoom = () => {
           </div>
 
           {/* Room Description Field */}
-          <div className="space-y-1 lg:col-span-2">
+          <div className="space-y-1">
             <p className="font-semibold">Room Description</p>
             <div className="input input-md outline-none input-bordered">
               <textarea
@@ -207,6 +207,28 @@ const AddRoom = () => {
               ></textarea>
             </div>
             {errors.roomDescription && (
+              <span className="text-red-600 flex items-center gap-1">
+                <BiErrorCircle /> This field is required
+              </span>
+            )}
+          </div>
+
+          {/* Room Price Field */}
+          <div className="space-y-1">
+            <p className="font-semibold">Price</p>
+            <div className="input input-md outline-none input-bordered">
+              <input
+                type="number"
+                name="price"
+                {...register("price", {
+                  required: true,
+                  pattern: /[1-9]/,
+                })}
+                placeholder="$ Price"
+                className=" h-full border-none w-full outline-none"
+              />
+            </div>
+            {errors.price && (
               <span className="text-red-600 flex items-center gap-1">
                 <BiErrorCircle /> This field is required
               </span>

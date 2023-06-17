@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
 import { FaCity } from "react-icons/fa";
 import { BiErrorCircle } from "react-icons/bi";
-import { AiOutlineCalendar } from "react-icons/ai";
-import { MdOutlineFileDownloadDone } from "react-icons/md";
+import { AiOutlineCalendar, AiOutlineSearch } from "react-icons/ai";
 /* 
 import { addDays } from "date-fns"; */
 import { useEffect, useRef, useState } from "react";
@@ -11,9 +10,11 @@ import format from "date-fns/format";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange } from "react-date-range";
+import { useNavigate } from "react-router-dom";
 
 const Explore = () => {
   const [dateError, setDateError] = useState(false);
+  const navigate = useNavigate();
   // date state
   const [range, setRange] = useState([
     {
@@ -74,6 +75,7 @@ const Explore = () => {
         startDate: format(range[0].startDate, "dd/MM/yyyy"),
         endDate: format(range[0].endDate, "dd/MM/yyyy"),
       };
+      navigate("/search", { state: { searchData } });
       console.log(searchData);
       reset();
     } else {
@@ -164,8 +166,8 @@ const Explore = () => {
 
           <div>
             <button className="flex gap-2 justify-center items-center bg-[#003276] px-3 py-3 font-semibold rounded-md transition ease-in-out delay-150 text-white hover:scale-95 hover:bg-[#042656] duration-300 w-full lg:w-min">
-              <MdOutlineFileDownloadDone className="text-2xl" />
-              Submit
+              <AiOutlineSearch className="text-2xl" />
+              Search
             </button>
           </div>
         </form>

@@ -16,6 +16,7 @@ import AddRoom from "../pages/Dashboard/AddRoom/AddRoom";
 import ManageRoomsAdmin from "../pages/Dashboard/ManageRoomsAdmin/ManageRoomsAdmin";
 import ManageRoomsOwner from "../pages/Dashboard/ManageRoomsOwner/ManageRoomsOwner";
 import UpdateRoom from "../pages/Dashboard/UpdateRoom/UpdateRoom";
+import SearchResult from "../pages/SearchResult/SearchResult";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Reservations></Reservations>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "search",
+        element: (
+          <PrivateRoute>
+            <SearchResult></SearchResult>
           </PrivateRoute>
         ),
       },
@@ -99,12 +108,14 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'update-room/:id',
-        element: <OwnerRoute>
-          <UpdateRoom></UpdateRoom>
-        </OwnerRoute>,
+        path: "update-room/:id",
+        element: (
+          <OwnerRoute>
+            <UpdateRoom></UpdateRoom>
+          </OwnerRoute>
+        ),
         // loader: ({params}) => fetch(`http://localhost:5000/room/${params.id}`)
-      }
+      },
     ],
   },
 ]);
