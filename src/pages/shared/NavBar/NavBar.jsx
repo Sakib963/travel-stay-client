@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/images/travel-stay-logo.png";
 import { MdLogin } from "react-icons/md";
 
@@ -70,10 +70,12 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">{navOptions}</ul>
       </div>
       <div className="navbar-end">
-        <button className="px-5 lg:px-10 py-3 bg-[#003276] rounded-md text-white font-semibold flex gap-2 items-center justify-center transition ease-in-out delay-150 hover:scale-95 hover:bg-[#042656] duration-300">
-          <MdLogin className="text-2xl" />
-          Login
-        </button>
+        <Link to={'/login'}>
+          <button className="px-5 lg:px-10 py-3 bg-[#003276] rounded-md text-white font-semibold flex gap-2 items-center justify-center transition ease-in-out delay-150 hover:scale-95 hover:bg-[#042656] duration-300">
+            <MdLogin className="text-2xl" />
+            Login
+          </button>
+        </Link>
       </div>
     </div>
   );
