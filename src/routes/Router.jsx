@@ -17,6 +17,7 @@ import ManageRoomsAdmin from "../pages/Dashboard/ManageRoomsAdmin/ManageRoomsAdm
 import ManageRoomsOwner from "../pages/Dashboard/ManageRoomsOwner/ManageRoomsOwner";
 import UpdateRoom from "../pages/Dashboard/UpdateRoom/UpdateRoom";
 import SearchResult from "../pages/SearchResult/SearchResult";
+import AllHotels from "../pages/AllHotels/AllHotels";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <SearchResult></SearchResult>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "hotels",
+        element: (
+          <PrivateRoute>
+            <AllHotels></AllHotels>
           </PrivateRoute>
         ),
       },

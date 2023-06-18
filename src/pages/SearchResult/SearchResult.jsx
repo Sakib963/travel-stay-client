@@ -70,15 +70,22 @@ const SearchResult = () => {
       <h3 className="text-2xl lg:text-3xl font-semibold text-center mt-10">
         Search Result for {searchData.cityName}
       </h3>
-      <div className="lg:w-3/4 lg:mx-auto mx-10 grid lg:grid-cols-3 gap-4 mt-10">
-        {rooms.map((room) => (
-          <ResultCard
-            key={room._id}
-            room={room}
-            handleReserve={handleReserve}
-          ></ResultCard>
-        ))}
-      </div>
+
+      {rooms.length ? (
+        <div className="lg:w-3/4 lg:mx-auto mx-10 grid lg:grid-cols-3 gap-4 mt-10">
+          {rooms.map((room) => (
+            <ResultCard
+              key={room._id}
+              room={room}
+              handleReserve={handleReserve}
+            ></ResultCard>
+          ))}
+        </div>
+      ) : (
+        <h3 className="text-xl lg:text-2xl font-semibold text-center mt-10">
+          No Data Found
+        </h3>
+      )}
     </div>
   );
 };

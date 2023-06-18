@@ -16,7 +16,6 @@ const NavBar = () => {
 
   const [isAdmin] = useAdmin();
   const [isOwner] = useOwner();
-  console.log(isAdmin);
 
   const handleLogout = () => {
     logOut()
@@ -43,6 +42,18 @@ const NavBar = () => {
           }
         >
           Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={"/hotels"}
+          className={({ isActive }) =>
+            isActive
+              ? "active-link hover:bg-[#003276] hover:text-white"
+              : "hover:bg-[#003276] hover:text-white"
+          }
+        >
+          All Hotels
         </NavLink>
       </li>
       <li>
