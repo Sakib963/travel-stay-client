@@ -12,7 +12,7 @@ const ManageUsers = () => {
   });
   //   Handling Admin
   const handleMakeAdmin = (user) => {
-    fetch(`http://localhost:5000/users/admin/${user._id}`, {
+    fetch(`https://travel-stay-server.vercel.app/users/admin/${user._id}`, {
       method: "PATCH",
     })
       .then((res) => res.json())
@@ -36,7 +36,7 @@ const ManageUsers = () => {
       image: user.photo,
       email: user.email,
     };
-    fetch(`http://localhost:5000/users/owner/${user._id}`, {
+    fetch(`https://travel-stay-server.vercel.app/users/owner/${user._id}`, {
       method: "PATCH",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(owner),

@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet-async";
 const SearchResult = () => {
   const { user } = useContext(AuthContext);
   const location = useLocation();
-  const { searchData } = location.state;
+  const { searchData } = location.state || "";
 
   const navigate = useNavigate();
 
@@ -17,10 +17,21 @@ const SearchResult = () => {
 
   const [rooms, setRooms] = useState([]);
 
+  const search = searchData?.cityName || "";
+
   useEffect(() => {
-    axiosSecure.get(`/search?city=${searchData.cityName}`).then((res) => {
-      setRooms(res.data);
-    });
+    axiosSecure
+      .get(`/search?city=${search}`)
+      .then((res) => {
+        setRooms(res.data);
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      });
   }, []);
 
   const handleReserve = (room) => {
@@ -72,7 +83,7 @@ const SearchResult = () => {
         <title>Search Result | Travel Stay</title>
       </Helmet>
       <h3 className="text-2xl lg:text-3xl font-semibold text-center mt-10">
-        Search Result for {searchData.cityName}
+        Search Result for {searchData?.cityName}
       </h3>
 
       {rooms.length ? (

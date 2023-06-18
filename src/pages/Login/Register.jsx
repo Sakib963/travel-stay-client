@@ -50,7 +50,7 @@ const Register = () => {
               photo: data.photo,
               role: "user",
             };
-            fetch("http://localhost:5000/users", {
+            fetch("https://travel-stay-server.vercel.app/users", {
               method: "POST",
               headers: { "content-type": "application/json" },
               body: JSON.stringify(savedUser),

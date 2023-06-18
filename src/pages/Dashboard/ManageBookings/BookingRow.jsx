@@ -31,14 +31,14 @@ const BookingRow = ({
           <>
             <button
               onClick={() => handleApprove(_id)}
-              disabled={status === "approved"}
+              disabled={status !== "pending"}
               className="btn bg-[#003276] btn-xs text-white hover:text-black"
             >
               approve
             </button>
             <button
               onClick={() => handleDeny(_id)}
-              disabled={status === "denied"}
+              disabled={status !== "pending"}
               className="btn bg-[#003276] btn-xs text-white hover:text-black"
             >
               deny

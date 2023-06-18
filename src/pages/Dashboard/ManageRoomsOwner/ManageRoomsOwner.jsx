@@ -12,10 +12,12 @@ const ManageRoomsOwner = () => {
   const { data: rooms = [], refetch: refetchRooms } = useQuery(
     ["rooms"],
     async () => {
-      const res = await axiosSecure.get(`/rooms?email=${user.email}`);
+      const res = await axiosSecure.get(`/rooms-owner?email=${user.email}`);
       return res.data;
     }
   );
+
+  console.log(rooms)
 
   const handleDeleteRoom = (_id) => {
     Swal.fire({

@@ -132,7 +132,6 @@ const router = createBrowserRouter([
             <UpdateRoom></UpdateRoom>
           </OwnerRoute>
         ),
-        // loader: ({params}) => fetch(`http://localhost:5000/room/${params.id}`)
       },
     ],
   },
