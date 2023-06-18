@@ -116,6 +116,15 @@ const Dashboard = () => {
         </li>
         <li>
           <NavLink
+            to={"/hotels"}
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
+            <AiOutlineHome className="text-lg" />
+            All Hotels
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
             to={"/contact"}
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >

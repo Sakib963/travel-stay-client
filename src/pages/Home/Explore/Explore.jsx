@@ -76,12 +76,10 @@ const Explore = () => {
         endDate: format(range[0].endDate, "dd/MM/yyyy"),
       };
       navigate("/search", { state: { searchData } });
-      console.log(searchData);
       reset();
     } else {
       // Date range is not selected
       setDateError(true);
-      console.log("Please select a date range");
     }
   };
 

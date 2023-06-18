@@ -9,6 +9,8 @@ import { BiErrorCircle } from "react-icons/bi";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
+import { Helmet } from "react-helmet-async";
+import Toggle from "react-toggle";
 
 const AllHotels = () => {
   const { user } = useContext(AuthContext);
@@ -18,7 +20,29 @@ const AllHotels = () => {
     const res = await axiosSecure.get(`/rooms`);
     return res.data;
   });
+
+  const { data: sortedHotels = [] } = useQuery(["sorted-hotels"], async () => {
+    const res = await axiosSecure.get(`/sorted-hotels`);
+    return res.data;
+  });
+
+  const [hotelData, setHotelData] = useState(hotels);
+
+
   const [dateError, setDateError] = useState(false);
+
+  const [biscuitReady, setBiscuitReady] = useState(false);
+
+  const handleBiscuitChange = () => {
+    setBiscuitReady(!biscuitReady);
+  };
+  useEffect(() => {
+    if (biscuitReady) {
+      setHotelData(sortedHotels);
+    } else {
+      setHotelData(hotels);
+    }
+  }, [hotels, biscuitReady]);
 
   // date state
   const [range, setRange] = useState([
@@ -111,12 +135,19 @@ const AllHotels = () => {
         });
     } else {
       // Date range is not selected
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please Select Date",
+      });
       setDateError(true);
-      console.log("Please select a date range");
     }
   };
   return (
     <div className="py-20">
+      <Helmet>
+        <title>All Hotels | Travel Stay</title>
+      </Helmet>
       <h3 className="text-2xl lg:text-3xl font-semibold text-center mt-10">
         All Hotels
       </h3>
@@ -162,21 +193,34 @@ const AllHotels = () => {
         )}
       </div>
 
-      {hotels.length ? (
-        <div className="lg:w-3/4 lg:mx-auto mx-10 grid lg:grid-cols-3 gap-4 mt-10">
-          {hotels.map((room) => (
-            <ResultCard
-              key={room._id}
-              room={room}
-              handleReserve={handleReserve}
-            ></ResultCard>
-          ))}
+      <div className="mt-10 lg:w-3/4 lg:mx-auto mx-10">
+        <div className="flex justify-end">
+          <form className="flex items-center gap-2">
+            <span id="biscuit-label">Filter By Total Guests</span>
+            <Toggle
+              id="biscuit-status"
+              checked={biscuitReady}
+              aria-labelledby="biscuit-label"
+              onChange={handleBiscuitChange}
+            />
+          </form>
         </div>
-      ) : (
-        <h3 className="text-xl lg:text-2xl font-semibold text-center mt-10">
-          No Data Found
-        </h3>
-      )}
+        {hotelData.length ? (
+          <div className=" grid lg:grid-cols-3 gap-4 mt-10">
+            {hotelData.map((room) => (
+              <ResultCard
+                key={room._id}
+                room={room}
+                handleReserve={handleReserve}
+              ></ResultCard>
+            ))}
+          </div>
+        ) : (
+          <h3 className="text-xl lg:text-2xl font-semibold text-center mt-10">
+            No Data Found
+          </h3>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import { MdOutlineArrowBack } from "react-icons/md";
+import { Helmet } from "react-helmet-async";
 const ErrorPage = () => {
   return (
     <div className="flex justify-center items-center">
+      <Helmet>
+        <title>Error | Travel Stay</title>
+      </Helmet>
       <div className="space-y-4">
         <div className="w-full">
           <iframe

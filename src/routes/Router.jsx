@@ -18,6 +18,7 @@ import ManageRoomsOwner from "../pages/Dashboard/ManageRoomsOwner/ManageRoomsOwn
 import UpdateRoom from "../pages/Dashboard/UpdateRoom/UpdateRoom";
 import SearchResult from "../pages/SearchResult/SearchResult";
 import AllHotels from "../pages/AllHotels/AllHotels";
+import ManageBookingsAdmin from "../pages/Dashboard/ManageBookingsAdmin/ManageBookingsAdmin";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +90,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageRoomsAdmin></ManageRoomsAdmin>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-bookings",
+        element: (
+          <AdminRoute>
+            <ManageBookingsAdmin></ManageBookingsAdmin>
           </AdminRoute>
         ),
       },

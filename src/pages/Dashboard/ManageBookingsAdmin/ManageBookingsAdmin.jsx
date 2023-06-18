@@ -1,68 +1,47 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useContext } from "react";
-import { AuthContext } from "../../../provider/AuthProvider";
-import BookingRow from "./BookingRow";
 import Swal from "sweetalert2";
+import BookingRow from "../ManageBookings/BookingRow";
 import { Helmet } from "react-helmet-async";
 
-const ManageBookings = () => {
-  const { user } = useContext(AuthContext);
+const ManageBookingsAdmin = () => {
   const [axiosSecure] = useAxiosSecure();
   const { data: bookings = [], refetch: refetchBookings } = useQuery(
-    ["reserve-owners"],
+    ["reservations"],
     async () => {
-      const res = await axiosSecure.get(`/reserve-owners?email=${user.email}`);
+      const res = await axiosSecure.get(`/reservations`);
       return res.data;
     }
   );
 
-  const handleApprove = (_id) => {
-    axiosSecure
-      .patch(`reserve-owners/${_id}?status=approved`)
-      .then((res) => {
-        if (res.data.modifiedCount) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Reservation Has Been Approved.",
-            showConfirmButton: false,
-            timer: 1500,
+  const handleDelete = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete(`/reservations/${_id}`)
+          .then((res) => {
+            if (res.data.deletedCount) {
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            }
+            refetchBookings();
+          })
+          .catch(() => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
           });
-        }
-        refetchBookings();
-      })
-      .catch(() => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-        });
-      });
-  };
-
-  const handleDeny = (_id) => {
-    axiosSecure
-      .patch(`reserve-owners/${_id}?status=denied`)
-      .then((res) => {
-        if (res.data.modifiedCount) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Reservation Has Been Denied.",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-        refetchBookings();
-      })
-      .catch(() => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-        });
-      });
+      }
+    });
   };
 
   return (
@@ -92,8 +71,7 @@ const ManageBookings = () => {
                     key={singleBooking._id}
                     singleBooking={singleBooking}
                     index={index}
-                    handleApprove={handleApprove}
-                    handleDeny={handleDeny}
+                    handleDelete={handleDelete}
                   ></BookingRow>
                 ))}
               </tbody>
@@ -109,4 +87,4 @@ const ManageBookings = () => {
   );
 };
 
-export default ManageBookings;
+export default ManageBookingsAdmin;

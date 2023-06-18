@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import RoomRow from "../../../components/RoomRow";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const ManageRoomsAdmin = () => {
   const [axiosSecure] = useAxiosSecure();
@@ -13,7 +14,6 @@ const ManageRoomsAdmin = () => {
     }
   );
 
-  console.log(rooms)
 
   const handleApprove = (_id) => {
     axiosSecure
@@ -65,6 +65,9 @@ const ManageRoomsAdmin = () => {
 
   return (
     <div className="py-20 lg:py-10">
+      <Helmet>
+        <title>Manage Rooms | Travel Stay</title>
+      </Helmet>
       <h3 className="text-2xl lg:text-3xl font-semibold text-center">
         Manage Rooms
       </h3>

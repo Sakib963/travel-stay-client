@@ -12,7 +12,6 @@ import useOwner from "../../../hooks/useOwner";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
-  console.log(user);
 
   const [isAdmin] = useAdmin();
   const [isOwner] = useOwner();

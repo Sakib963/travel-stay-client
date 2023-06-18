@@ -3,8 +3,15 @@ import useAdmin from "../../hooks/useAdmin";
 import useOwner from "../../hooks/useOwner";
 
 const ResultCard = ({ room, handleReserve }) => {
-  const { photoURL, hotelName, hotelType, address, price, roomDescription } =
-    room;
+  const {
+    photoURL,
+    hotelName,
+    hotelType,
+    address,
+    price,
+    roomDescription,
+    totalNumberOfGuest,
+  } = room;
   const [isAdmin] = useAdmin();
   const [isOwner] = useOwner();
 
@@ -15,7 +22,7 @@ const ResultCard = ({ room, handleReserve }) => {
         <img src={photoURL} alt="Shoes" />
       </figure>
       <div className="card-body">
-        <div className="flex justify-between">
+        <div className="lg:flex block justify-between space-y-1">
           <h2 className="card-title">{hotelName}</h2>
           <div className="badge badge-lg bg-[#003276] text-white p-3">
             $ {price}
@@ -24,6 +31,9 @@ const ResultCard = ({ room, handleReserve }) => {
         <p>{roomDescription}</p>
         <p>{address}</p>
         <p>Type: {hotelType}</p>
+        <div className="badge badge-lg bg-[#003276] text-white p-3">
+          Total Guests: {totalNumberOfGuest}
+        </div>
         <div className="card-actions justify-end">
           <button
             disabled={noReserve}

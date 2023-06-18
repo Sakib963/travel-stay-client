@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import ResultCard from "./ResultCard";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const SearchResult = () => {
   const { user } = useContext(AuthContext);
@@ -67,6 +68,9 @@ const SearchResult = () => {
 
   return (
     <div className="py-20">
+      <Helmet>
+        <title>Search Result | Travel Stay</title>
+      </Helmet>
       <h3 className="text-2xl lg:text-3xl font-semibold text-center mt-10">
         Search Result for {searchData.cityName}
       </h3>

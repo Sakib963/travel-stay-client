@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../provider/AuthProvider";
 import RoomRow from "../../../components/RoomRow";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const ManageRoomsOwner = () => {
   const { user } = useContext(AuthContext);
@@ -48,6 +49,9 @@ const ManageRoomsOwner = () => {
 
   return (
     <div className="py-20 lg:py-10">
+      <Helmet>
+        <title>Manage Rooms | Travel Stay</title>
+      </Helmet>
       <h3 className="text-2xl lg:text-3xl font-semibold text-center">
         Manage Rooms
       </h3>

@@ -5,6 +5,7 @@ import { BiErrorCircle, BiLogIn } from "react-icons/bi";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const AddRoom = () => {
   const { user } = useContext(AuthContext);
@@ -26,7 +27,6 @@ const AddRoom = () => {
       totalNumberOfGuest: 0,
       status: "pending",
     };
-    console.log(roomData);
     axiosSecure
       .post("/create-room", roomData)
       .then((res) => {
@@ -52,6 +52,9 @@ const AddRoom = () => {
   };
   return (
     <div className="py-20 lg:py-10">
+      <Helmet>
+        <title>Add A Room | Travel Stay</title>
+      </Helmet>
       <h3 className="text-2xl lg:text-3xl font-semibold text-center">
         Add A Room
       </h3>

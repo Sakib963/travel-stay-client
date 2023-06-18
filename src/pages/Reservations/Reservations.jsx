@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import ReservationRow from "./ReservationRow";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const Reservations = () => {
   const { user } = useContext(AuthContext);
@@ -54,6 +55,9 @@ const Reservations = () => {
 
   return (
     <div className="py-28">
+      <Helmet>
+        <title>Reservations | Travel Stay</title>
+      </Helmet>
       <h2 className="text-2xl lg:text-3xl font-semibold text-center">
         Your Reservations
       </h2>

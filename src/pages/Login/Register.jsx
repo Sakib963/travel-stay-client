@@ -8,6 +8,7 @@ import registerBg from "../../assets/images/registration.svg";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import SocialLogin from "../../components/SocialLogin";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const [open, setOpen] = useState(0);
@@ -90,6 +91,9 @@ const Register = () => {
   };
   return (
     <div className="py-28 grid lg:grid-cols-2 gap-8">
+      <Helmet>
+        <title>Register | Travel Stay</title>
+      </Helmet>
       <div className="lg:flex lg:justify-center lg:items-center">
         <form
           onSubmit={handleSubmit(onSubmit)}

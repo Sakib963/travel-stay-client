@@ -15,7 +15,6 @@ const TopCities = () => {
       setTopCities(res.data);
     });
   }, []);
-  console.log(topCities);
   return (
     <div className="">
       <h3 className="text-2xl lg:text-3xl font-semibold text-center">

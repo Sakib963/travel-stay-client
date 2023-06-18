@@ -1,8 +1,12 @@
 import { MdOutlineFileDownloadDone } from "react-icons/md";
 import contactBg from "../../assets/images/contact-bg.svg";
+import { Helmet } from "react-helmet-async";
 const Contact = () => {
   return (
     <div className="py-28 grid lg:grid-cols-2">
+      <Helmet>
+        <title>Contact | Travel Stay</title>
+      </Helmet>
       <div className="flex justify-center items-center">
         <form className="border border-[#003276] p-5 lg:w-3/4 lg:mx-auto mx-10 rounded-md space-y-3">
           <h3 className="text-center text-2xl lg:text-3xl font-semibold">

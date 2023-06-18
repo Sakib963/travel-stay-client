@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { BiErrorCircle, BiLogIn } from "react-icons/bi";
 import { AuthContext } from "../../../provider/AuthProvider";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const UpdateRoom = () => {
   const { user } = useContext(AuthContext);
@@ -16,7 +17,6 @@ const UpdateRoom = () => {
 
   // Extract the ID from the pathname
   const id = pathname.substring(pathname.lastIndexOf("/") + 1);
-  console.log(id);
 
   const [axiosSecure] = useAxiosSecure();
   useEffect(() => {
@@ -40,7 +40,6 @@ const UpdateRoom = () => {
       totalNumberOfGuest: 0,
       status: "pending",
     };
-    console.log(roomData);
     axiosSecure
       .patch(`/room/${id}`, roomData)
       .then((res) => {
@@ -67,6 +66,9 @@ const UpdateRoom = () => {
 
   return (
     <div className="py-20 lg:py-10">
+      <Helmet>
+        <title>Update Room | Travel Stay</title>
+      </Helmet>
       <h3 className="text-2xl lg:text-3xl font-semibold text-center">
         Manage Rooms
       </h3>

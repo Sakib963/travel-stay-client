@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 import SocialLogin from "../../components/SocialLogin";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
     const { loginUser } = useContext(AuthContext);
@@ -40,7 +41,6 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     loginUser(data.email, data.password)
       .then(() => {
         Swal.fire({
@@ -54,7 +54,6 @@ const Login = () => {
         reset();
       })
       .catch((error) => {
-        console.log(error.message);
         if (error.message === "Firebase: Error (auth/wrong-password).") {
           setWrongPasswordError(true);
         }
@@ -65,6 +64,9 @@ const Login = () => {
   };
   return (
     <div className="py-28 grid lg:grid-cols-2 gap-8">
+      <Helmet>
+        <title>Login | Travel Stay</title>
+      </Helmet>
       <div className="lg:flex lg:justify-center lg:items-center">
         <form
           onSubmit={handleSubmit(onSubmit)}
